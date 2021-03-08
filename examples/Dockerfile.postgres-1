@@ -1,0 +1,9 @@
+FROM debezium/postgres:11
+
+ENV POSTGRES_USER postgres 
+ENV POSTGRES_PASSWORD postgres
+ENV POSTGRES_DB tests 
+
+COPY postgres-1.init.sql /docker-entrypoint-initdb.d/
+
+RUN chmod a+r /docker-entrypoint-initdb.d/*

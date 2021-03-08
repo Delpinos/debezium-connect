@@ -1,0 +1,65 @@
+version: "3.8"
+
+services:
+  kafka-connect-cdc:
+    image: delpinos/kafka-connect
+    container_name: kafka-connect-cdc
+    networks:
+      - n1
+    ports:
+      - 18083:18083
+    environment:
+      BOOTSTRAP_SERVERS: "broker-1:29092,broker-2:29092,broker-3:29092,broker-4:29092" 
+      GROUP_ID: "kafka-connect-cdc"
+      KEY_CONVERTER: "org.apache.kafka.connect.json.JsonConverter"
+      VALUE_CONVERTER: "org.apache.kafka.connect.json.JsonConverter"
+      INTERNAL_KEY_CONVERTER: "org.apache.kafka.connect.json.JsonConverter"
+      INTERNAL_VALUE_CONVERTER: "org.apache.kafka.connect.json.JsonConverter"
+      CONFIG_STORAGE_TOPIC: "kafka-connect-cdc.configs"
+      OFFSET_STORAGE_TOPIC: "kafka-connect-cdc.offsets"
+      STATUS_STORAGE_TOPIC: "kafka-connect.status"
+      CONFIG_STORAGE_REPLICATION_FACTOR: 1
+      OFFSET_STORAGE_REPLICATION_FACTOR: 1
+      STATUS_STORAGE_REPLICATION_FACTOR: 1
+      REST_HOST_NAME: "kafka-connect-cdc"
+      REST_PORT: 18083
+      ADVERTISED_HOST_NAME: "kafka-connect-cdc"
+      ADVERTISED_PORT: 18083
+      REGISTER_1_NAME: "kafka-connect-cdc-test-1"      
+      REGISTER_1_CONFIG_CONNECTOR_CLASS: "io.debezium.connector.postgresql.PostgresConnector"
+      REGISTER_1_CONFIG_PLUGIN_NAME: "pgoutput"
+      REGISTER_1_CONFIG_TASKS_MAX: "1"
+      REGISTER_1_CONFIG_DATABASE_HOSTNAME: "debezium-postgres-test-1"
+      REGISTER_1_CONFIG_DATABASE_PORT: "5432"
+      REGISTER_1_CONFIG_DATABASE_USER: "postgres"
+      REGISTER_1_CONFIG_DATABASE_PASSWORD: "postgres"
+      REGISTER_1_CONFIG_DATABASE_DBNAME: "test"
+      REGISTER_1_CONFIG_DATABASE_SERVER_NAME: "kafka-connect-cdc-test-1"
+      REGISTER_1_CONFIG_TABLE_WHITELIST: "test.test_cdc"   
+      REGISTER_1_CONFIG_SLOT_NAME: "test"
+      REGISTER_1_CONFIG_INCLUDE_SCHEMA_CHANGES: "true"
+      REGISTER_1_CONFIG_AUTO_CREATE: "true"     
+      REGISTER_1_CONFIG_TIME_PRECISION_MODE: "connect"
+      REGISTER_1_CONFIG_DECIMAL_HANDLING_MODE: "double"
+      REGISTER_2_NAME: "kafka-connect-cdc-test-2"      
+      REGISTER_2_CONFIG_CONNECTOR_CLASS: "io.debezium.connector.postgresql.PostgresConnector"
+      REGISTER_2_CONFIG_PLUGIN_NAME: "pgoutput"
+      REGISTER_2_CONFIG_TASKS_MAX: "1"
+      REGISTER_2_CONFIG_DATABASE_HOSTNAME: "debezium-postgres-test-2"
+      REGISTER_2_CONFIG_DATABASE_PORT: "5432"
+      REGISTER_2_CONFIG_DATABASE_USER: "postgres"
+      REGISTER_2_CONFIG_DATABASE_PASSWORD: "postgres"
+      REGISTER_2_CONFIG_DATABASE_DBNAME: "test"
+      REGISTER_2_CONFIG_DATABASE_SERVER_NAME: "kafka-connect-cdc-test-2"
+      REGISTER_1_CONFIG_TABLE_WHITELIST: "test.test_cdc" 
+      REGISTER_2_CONFIG_SLOT_NAME: "test"
+      REGISTER_2_CONFIG_INCLUDE_SCHEMA_CHANGES: "true"
+      REGISTER_2_CONFIG_AUTO_CREATE: "true"     
+      REGISTER_2_CONFIG_TIME_PRECISION_MODE: "connect"
+      REGISTER_2_CONFIG_DECIMAL_HANDLING_MODE: "double"
+    restart: always
+    privileged: true
+    tty: true
+
+networks:
+  n1:

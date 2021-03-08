@@ -1,0 +1,18 @@
+{
+  "name": "debezium-connect",
+  "version": "1.4.2",
+  "author": {
+    "name": "Alef Bruno Delpino de Oliveira",
+    "email": "alef@delpinos.com"
+  },
+  "scripts": {
+    "build": "docker build -t delpinos/debezium-connect .",
+    "release": "standard-version",
+    "release-patch": "npm run release -- --release-as patch",
+    "release-minor": "npm run release -- --release-as minor",
+    "release-major": "npm run release -- --release-as major"
+  },
+  "devDependencies": {
+    "standard-version": "^9.0.0"
+  }
+}

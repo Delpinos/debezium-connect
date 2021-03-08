@@ -1,0 +1,8 @@
+[ganto-jo]
+name=Copr repo for jo owned by ganto
+baseurl=https://copr-be.cloud.fedoraproject.org/results/ganto/jo/epel-7-x86_64/
+skip_if_unavailable=True
+gpgcheck=1
+gpgkey=https://copr-be.cloud.fedoraproject.org/results/ganto/jo/pubkey.gpg
+enabled=1
+enabled_metadata=1

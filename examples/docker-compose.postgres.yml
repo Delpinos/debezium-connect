@@ -1,0 +1,42 @@
+version: '3.8'
+
+services:
+
+  debezium-postgres-test-1:
+    image: delpinos/debezium-postgres-test-1
+    container_name: debezium-postgres-test-1
+    build:
+      context: .
+      dockerfile: Dockerfile.postgres-1
+    networks:
+      - n1
+    ports:
+      - 15432:5432
+    environment:
+      POSTGRES_USER: "postgres"
+      POSTGRES_PASSWORD: "postgres"
+      POSTGRES_DB: "test"
+    restart: always
+    privileged: true
+    tty: true  
+
+  debezium-postgres-test-2:
+    image: delpinos/debezium-postgres-test-2
+    container_name: debezium-postgres-test-2
+    build:
+      context: .
+      dockerfile: Dockerfile.postgres-2
+    networks:
+      - n1
+    ports:
+      - 25432:5432
+    environment:
+      POSTGRES_USER: "postgres"
+      POSTGRES_PASSWORD: "postgres"
+      POSTGRES_DB: "test"
+    restart: always
+    privileged: true
+    tty: true   
+
+networks:
+  n1:
